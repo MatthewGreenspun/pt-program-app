@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './login_field.dart';
+import "package:shared_preferences/shared_preferences.dart";
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -77,6 +78,9 @@ class _LoginState extends State<Login> {
 
   void onCodeSubmit() {
     //TODO:
+    SharedPreferences.getInstance().then((instance) => instance.setString(
+        "login_id",
+        "some login id")); // TODO store some server generated id after login
     Navigator.popAndPushNamed(context, "/patients");
   }
 
