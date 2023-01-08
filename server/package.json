@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server for PT program app",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start": "nodemon dist/index.js",
+    "lint": "tslint -c tslint.json src/**/*.ts",
+    "prepublish": "npm run build"
+  },
+  "author": {
+    "name": "Matthew Greenspun"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "tslint": "^6.1.3",
+    "typescript": "^4.9.4"
+  },
+  "files": [
+    "./bin/*",
+    "./lib/*"
+  ],
+  "typings": "./lib/index.d.ts"
+}
