@@ -5,7 +5,8 @@ import "package:shared_preferences/shared_preferences.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
+  SharedPreferences prefs = await SharedPreferences
+      .getInstance(); //TODO change shared preferences to secure storage
   String? loginId = prefs.getString("login_id");
   runApp(MyApp(loginId: loginId));
 }
