@@ -37,12 +37,15 @@ class _LoginState extends State<Login> {
           child: Scaffold(
               body: Center(
                   child: Container(
+                      width: 500,
                       padding: const EdgeInsets.only(top: 100),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
                             "A code has been sent to ${_emailController.value.text}", //TODO doesn't look good
-                            style: const TextStyle(fontSize: 30),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 20, ),
                           ),
                           LoginField(
                             controller: _codeController,
@@ -52,8 +55,8 @@ class _LoginState extends State<Login> {
                           ElevatedButton(
                             onPressed: onCodeSubmit,
                             style: ElevatedButton.styleFrom(
-                                fixedSize: const Size.fromWidth(
-                                    500)), //TODO responsive
+                                fixedSize: const Size.fromHeight(
+                                    40)), //TODO responsive
                             child: const Text("Submit"),
                           ),
                         ],
@@ -81,7 +84,7 @@ class _LoginState extends State<Login> {
     SharedPreferences.getInstance().then((instance) => instance.setString(
         "login_id",
         "some login id")); // TODO store some server generated id after login
-    Navigator.popAndPushNamed(context, "/patients");
+    Navigator.pushNamedAndRemoveUntil(context, "/patients", (route) => false);
   }
 
   @override
@@ -93,6 +96,7 @@ class _LoginState extends State<Login> {
               width: 500, //TODO responsive
               padding: const EdgeInsets.only(top: 100),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   LoginField(
                     controller: _emailController,
@@ -107,7 +111,7 @@ class _LoginState extends State<Login> {
                   ElevatedButton(
                     onPressed: onEmailSubmit,
                     style: ElevatedButton.styleFrom(
-                        fixedSize: const Size.fromWidth(500)), //TODO responsive
+                        fixedSize: const Size.fromHeight(40)), //TODO responsive
                     child: const Text("Submit"),
                   ),
                 ],

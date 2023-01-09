@@ -13,7 +13,7 @@ class LoginField extends StatelessWidget {
       required this.label,
       this.inputType = TextInputType.text,
       this.isPassword = false,
-      this.margin = const EdgeInsets.all(8),
+      this.margin = const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
       this.width = 500});
 
   @override
