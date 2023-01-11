@@ -16,15 +16,19 @@ class _PatientsState extends State<Patients> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.grey[900],
         title: const ListTile(
           leading: Icon(Icons.search),
-          title: Text("Search"),
+          title: TextField(
+            decoration: InputDecoration(label: Text("Search")),
+          ),
         ),
       ),
       body: Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: PatientsList(patients: [
-            User("", "Matthew", UserType.patient, "test@test.com"),
+            User("", "Matthew", UserType.patient,
+                "test@test.com"), //TODO fetch from backend
             User("", "Matthew", UserType.patient, "test@test.com"),
             User("", "Matthew", UserType.patient, "test@test.com"),
             User("", "Matthew", UserType.patient, "test@test.com"),
@@ -32,6 +36,8 @@ class _PatientsState extends State<Patients> {
             User("", "Matthew", UserType.patient, "test@test.com"),
           ])),
       bottomNavigationBar: const BottomNavigation(),
+      floatingActionButton:
+          FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add)),
     );
   }
 }

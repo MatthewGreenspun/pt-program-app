@@ -8,18 +8,12 @@ class PatientCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        child: Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: Row(children: [
-              Flexible(
-                  child: ListTile(
-                title: Text(patient.name),
-                leading: const Icon(Icons.person),
-              )),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text("Manage"),
-              )
-            ])));
+        child: ExpansionTile(
+      title: Text(patient.name),
+      leading: const Icon(Icons.person),
+      children: [
+        ElevatedButton(onPressed: () {}, child: const Text("Add Program"))
+      ],
+    ));
   }
 }

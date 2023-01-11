@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'PT Program',
       theme: ThemeData.dark().copyWith(
-          colorScheme: const ColorScheme.dark().copyWith(
-              primary: Colors.lightBlue, secondary: Colors.lightBlueAccent)),
+          colorScheme: const ColorScheme.dark()
+              .copyWith(primary: Colors.amber, secondary: Colors.amberAccent)),
       home: loginId == null ? const Login() : const Patients(),
       routes: {"/patients": (context) => const Patients()},
     );

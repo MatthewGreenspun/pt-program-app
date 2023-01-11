@@ -12,6 +12,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      backgroundColor: Colors.grey[900],
       currentIndex: _selectedIdx,
       onTap: (value) => setState(() {
         _selectedIdx = value;
