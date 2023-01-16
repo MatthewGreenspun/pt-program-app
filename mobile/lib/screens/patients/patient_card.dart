@@ -9,8 +9,16 @@ class PatientCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         child: ExpansionTile(
-      title: Text(patient.name),
-      leading: const Icon(Icons.person),
+      title: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        Text(patient.name),
+        const Text("No Weight"),
+        const Text("3 sets of 10")
+      ]),
+      leading: Checkbox(
+        value: true,
+        onChanged: (value) {},
+        activeColor: Theme.of(context).colorScheme.primary,
+      ),
       children: [
         ElevatedButton(onPressed: () {}, child: const Text("Add Program"))
       ],

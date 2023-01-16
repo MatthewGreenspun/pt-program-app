@@ -101,13 +101,13 @@ class Settings extends StatelessWidget {
                                                   child: Text("Patient"))
                                             ],
                                           ))),
-                              const Setting(
+                              Setting(
                                 name: "Join Code",
                                 child: StyledText(
-                                  text: "b7X02Muw",
+                                  text: settingsStore.joinCode,
                                   size: 20,
                                 ),
-                              ), //TODO replace with actual join code
+                              ),
                               Setting(
                                 name: "Log Out",
                                 child: ElevatedButton(
