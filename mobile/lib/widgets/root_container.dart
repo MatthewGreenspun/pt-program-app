@@ -37,6 +37,7 @@ class _RootContainerState extends State<RootContainer> {
           });
         },
       ),
+      floatingActionButton: null,
     );
   }
 }

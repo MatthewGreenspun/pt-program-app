@@ -15,6 +15,7 @@ class StyledText extends StatelessWidget {
       text,
       style: TextStyle(
           fontSize: size,
+          overflow: TextOverflow.ellipsis,
           fontWeight: bold ? FontWeight.bold : FontWeight.normal),
     );
   }
