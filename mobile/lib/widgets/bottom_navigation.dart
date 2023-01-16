@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
 
-class BottomNavigation extends StatefulWidget {
-  const BottomNavigation({super.key});
+class BottomNavigation extends StatelessWidget {
+  final int idx;
+  final void Function(int) onTap;
+  const BottomNavigation({super.key, required this.idx, required this.onTap});
 
-  @override
-  State<BottomNavigation> createState() => _BottomNavigationState();
-}
-
-class _BottomNavigationState extends State<BottomNavigation> {
-  int _selectedIdx = 0;
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: Colors.grey[900],
-      currentIndex: _selectedIdx,
-      onTap: (value) => setState(() {
-        _selectedIdx = value;
-      }),
+      backgroundColor: Theme.of(context).bottomAppBarColor,
+      currentIndex: idx,
+      onTap: onTap,
       selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
-      unselectedItemColor: const Color.fromARGB(255, 172, 172, 172),
+      unselectedItemColor: Colors.grey,
       type: BottomNavigationBarType.fixed,
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.group), label: "Patients"),
