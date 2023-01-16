@@ -13,7 +13,6 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences
       .getInstance(); //TODO change shared preferences to secure storage
   String? loginId = prefs.getString("login_id");
-  print(Colors.blue.value.toString());
   runApp(MyApp(loginId: loginId));
 }
 
