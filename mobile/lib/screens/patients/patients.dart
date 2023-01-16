@@ -5,6 +5,7 @@ import "./patients_list.dart";
 import "../../models/user.dart";
 
 class Patients extends StatefulWidget {
+  static const routeName = "/patients";
   const Patients({super.key});
 
   @override
@@ -14,30 +15,25 @@ class Patients extends StatefulWidget {
 class _PatientsState extends State<Patients> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.grey[900],
-        title: const ListTile(
-          leading: Icon(Icons.search),
-          title: TextField(
-            decoration: InputDecoration(label: Text("Search")),
-          ),
-        ),
-      ),
-      body: Container(
-          padding: const EdgeInsets.all(8),
-          child: PatientsList(patients: [
-            User("", "Matthew", UserType.patient,
-                "test@test.com"), //TODO fetch from backend
-            User("", "Matthew", UserType.patient, "test@test.com"),
-            User("", "Matthew", UserType.patient, "test@test.com"),
-            User("", "Matthew", UserType.patient, "test@test.com"),
-            User("", "Matthew", UserType.patient, "test@test.com"),
-            User("", "Matthew", UserType.patient, "test@test.com"),
-          ])),
-      bottomNavigationBar: const BottomNavigation(),
-      floatingActionButton:
-          FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add)),
-    );
+    return Container(
+        padding: const EdgeInsets.all(8),
+        child: PatientsList(patients: [
+          User("", "Matthew", UserType.patient,
+              "test@test.com"), //TODO fetch from backend
+          User("", "Matthew", UserType.patient, "test@test.com"),
+          User("", "Matthew", UserType.patient, "test@test.com"),
+          User("", "Matthew", UserType.patient, "test@test.com"),
+          User("", "Matthew", UserType.patient, "test@test.com"),
+          User("", "Matthew", UserType.patient, "test@test.com"),
+        ]));
+  }
+}
+
+class AddPatientsButton extends StatelessWidget {
+  const AddPatientsButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add));
   }
 }

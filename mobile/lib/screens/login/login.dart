@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import './login_field.dart';
+import "../patients/patients.dart";
+import "../../stores/root.dart";
+import "../../widgets/search_bar.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
+final Root rootStore = Root();
+
 class Login extends StatefulWidget {
+  static const String routeName = "/login";
   const Login({super.key});
 
   @override
@@ -45,7 +51,9 @@ class _LoginState extends State<Login> {
                           Text(
                             "A code has been sent to ${_emailController.value.text}", //TODO doesn't look good
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 20, ),
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
                           ),
                           LoginField(
                             controller: _codeController,
@@ -84,7 +92,9 @@ class _LoginState extends State<Login> {
     SharedPreferences.getInstance().then((instance) => instance.setString(
         "login_id",
         "some login id")); // TODO store some server generated id after login
-    Navigator.pushNamedAndRemoveUntil(context, "/patients", (route) => false);
+    // Navigator.pushNamedAndRemoveUntil(context, "/patients", (route) => false);
+    rootStore.changeScreen(screen: Screen.patients);
+    Navigator.pushNamedAndRemoveUntil(context, "/root", (route) => false);
   }
 
   @override
@@ -92,6 +102,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Center(
           child: Container(
+              //TODO use form widget
               //TODO add logo
               width: 500, //TODO responsive
               padding: const EdgeInsets.only(top: 100),
