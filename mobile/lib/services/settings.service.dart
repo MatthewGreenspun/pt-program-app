@@ -1,8 +1,11 @@
 import "package:shared_preferences/shared_preferences.dart";
 import "../models/settings.dart";
 import "package:flutter/material.dart";
+import './base.service.dart';
 
-class SettingsService {
+class SettingsService extends BaseService {
+  SettingsService() : super();
+
   Future<bool> get isDark async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool("isDark") ?? true;
@@ -63,6 +66,11 @@ class SettingsService {
 
   // Future<AccountType> get accountType async { //TODO server
   // }
+
+  Future<Map> get user async {
+    return await request(
+        "/users/doctor/08faac06-aaec-4f0a-94b6-89442ed9ac7d", Method.get);
+  }
 
   Future<Unit> get units async {
     final prefs = await SharedPreferences.getInstance();
