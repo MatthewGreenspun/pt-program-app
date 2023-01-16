@@ -47,11 +47,21 @@ abstract class _Settings with Store {
     settingsService.setPrimaryColor(value);
   }
 
+  @observable
+  String joinCode = "";
+
+  @action
+  void setJoinCode(String value) {
+    joinCode = value;
+  }
+
   @action
   Future<void> readSavedSettings() async {
     final savedIsDark = await settingsService.isDark;
     final savedPrimaryColor = await settingsService.primaryColor;
     final savedUnits = await settingsService.units;
+    final user = await settingsService.user;
+    setJoinCode(user['joinCode']);
     setIsDark(savedIsDark);
     setPrimaryColor(savedPrimaryColor);
     setUnits(savedUnits);
