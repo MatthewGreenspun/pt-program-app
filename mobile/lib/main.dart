@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile/services/settings.service.dart';
 import 'package:mobile/stores/settings.dart';
 import 'screens/login/login.dart';
-import 'screens/patients/patients.dart';
 import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import "./widgets/root_container.dart";
 import "package:flutter_mobx/flutter_mobx.dart";
