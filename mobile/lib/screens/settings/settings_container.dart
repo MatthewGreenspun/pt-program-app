@@ -11,14 +11,14 @@ class SettingsContainer extends StatelessWidget {
     return Container(
         margin: const EdgeInsets.symmetric(vertical: 24),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          StyledText(text: title, size: 25, bold: true),
+          StyledText(title, size: 25, bold: true),
           Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  border: Border.all(
-                      color: Theme.of(context).primaryColorLight, width: 3)),
+                  border:
+                      Border.all(color: Theme.of(context).hintColor, width: 3)),
               child: child)
         ]));
   }

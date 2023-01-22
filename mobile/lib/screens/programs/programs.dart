@@ -38,12 +38,12 @@ class Programs extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: const [
                         StyledText(
-                          text: "1/16/23",
+                          "1/16/23",
                           size: 30,
                           bold: true,
                         ),
                         StyledText(
-                          text: "Matthew Greenspun - Program Day 1",
+                          "Matthew Greenspun - Program Day 1",
                           size: 30,
                           bold: true,
                         )

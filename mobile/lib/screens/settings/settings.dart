@@ -19,7 +19,6 @@ class Settings extends StatelessWidget {
     Colors.purple,
     Colors.pink
   ];
-  // final settingsStore = SettingsStore();
   Settings({super.key});
 
   @override
@@ -87,30 +86,48 @@ class Settings extends StatelessWidget {
                             children: [
                               Setting(
                                   name: "Account Type",
-                                  child: Observer(
-                                      builder: (_) => DropdownButton(
-                                            onChanged: (value) => settingsStore
-                                                .setAccountType(value!),
-                                            value: settingsStore.accountType,
-                                            items: const [
-                                              DropdownMenuItem<AccountType>(
-                                                  value: AccountType.doctor,
-                                                  child: Text("Doctor")),
-                                              DropdownMenuItem<AccountType>(
-                                                  value: AccountType.patient,
-                                                  child: Text("Patient"))
-                                            ],
-                                          ))),
+                                  child: DropdownButton(
+                                    onChanged: (value) =>
+                                        settingsStore.setAccountType(value!),
+                                    value: settingsStore.accountType,
+                                    items: const [
+                                      DropdownMenuItem<AccountType>(
+                                          value: AccountType.doctor,
+                                          child: Text("Doctor")),
+                                      DropdownMenuItem<AccountType>(
+                                          value: AccountType.patient,
+                                          child: Text("Patient"))
+                                    ],
+                                  )),
                               Setting(
                                 name: "Join Code",
                                 child: StyledText(
-                                  text: settingsStore.joinCode,
+                                  settingsStore.joinCode,
                                   size: 20,
                                 ),
                               ),
                               Setting(
+                                name: "Change Password",
+                                child: OutlinedButton(
+                                  style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(
+                                          Colors.red.withOpacity(0.1)),
+                                      foregroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.red)),
+                                  child: const Text("Change Password"),
+                                  onPressed: () {},
+                                ),
+                              ), //TODO use auth service
+                              Setting(
                                 name: "Log Out",
-                                child: ElevatedButton(
+                                child: OutlinedButton(
+                                  style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(
+                                          Colors.red.withOpacity(0.1)),
+                                      foregroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.red)),
                                   child: const Text("Log out"),
                                   onPressed: () {},
                                 ),
