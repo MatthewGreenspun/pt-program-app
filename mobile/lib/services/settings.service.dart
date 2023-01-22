@@ -68,8 +68,7 @@ class SettingsService extends BaseService {
   // }
 
   Future<Map> get user async {
-    return await request(
-        "/users/doctor/08faac06-aaec-4f0a-94b6-89442ed9ac7d", Method.get);
+    return await request("/users/doctor", Method.get);
   }
 
   Future<Unit> get units async {

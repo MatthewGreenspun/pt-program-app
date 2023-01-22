@@ -3,22 +3,21 @@ import 'package:mobile/services/settings.service.dart';
 import 'package:mobile/stores/settings.dart';
 import 'screens/login/login.dart';
 import 'screens/patients/patients.dart';
-import "package:shared_preferences/shared_preferences.dart";
+import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import "./widgets/root_container.dart";
 import "package:flutter_mobx/flutter_mobx.dart";
 import "package:provider/provider.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences
-      .getInstance(); //TODO change shared preferences to secure storage
-  String? loginId = prefs.getString("login_id");
-  runApp(MyApp(loginId: loginId));
+  const secureStorage = FlutterSecureStorage();
+  bool isLoggedIn = await secureStorage.containsKey(key: "token");
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  final String? loginId;
-  MyApp({super.key, required this.loginId});
+  final bool isLoggedIn;
+  const MyApp({super.key, required this.isLoggedIn});
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -46,11 +45,8 @@ class MyApp extends StatelessWidget {
                               primary: settingsStore.primaryColor,
                               secondary: settingsStore.primaryColor,
                             )),
-                      home: RootContainer(),
-                      routes: {
-                        "/patients": (context) => const Patients(),
-                        "/root": (context) => RootContainer()
-                      },
+                      home: isLoggedIn ? const RootContainer() : const Login(),
+                      routes: {"/root": (context) => const RootContainer()},
                     ))));
   }
 }
