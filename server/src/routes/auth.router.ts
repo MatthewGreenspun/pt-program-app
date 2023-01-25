@@ -6,10 +6,8 @@ const usersService = new UsersService();
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
   try {
     const token = await usersService.verifyDoctor(email, password);
-    console.log("token: ", token);
     res.json({ token });
   } catch (err) {
     console.error("login error: ", err);
