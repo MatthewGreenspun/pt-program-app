@@ -6,7 +6,7 @@ enum Method { get, post, put, delete }
 
 class BaseService {
   static const String baseURI = "localhost:8080";
-  static const _secureStorage = FlutterSecureStorage();
+  static const secureStorage = FlutterSecureStorage();
   static late http.Client _client;
   String? _authToken;
   BaseService() {
@@ -43,11 +43,11 @@ class BaseService {
 
   Future<void> setAuthToken(String token) async {
     _authToken = token;
-    await _secureStorage.write(key: "token", value: token);
+    await secureStorage.write(key: "token", value: token);
   }
 
   Future<void> _getLocalAuthToken() async {
-    String? token = await _secureStorage.read(key: "token");
+    String? token = await secureStorage.read(key: "token");
     _authToken = token;
   }
 

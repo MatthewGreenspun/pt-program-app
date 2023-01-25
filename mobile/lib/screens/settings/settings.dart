@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobile/screens/login/login.dart';
+import 'package:mobile/services/auth.service.dart';
 import 'package:mobile/widgets/color_picker.dart';
 import '../../widgets/styled_text.dart';
 import '../../widgets/toggle_switch.dart';
@@ -10,7 +12,7 @@ import "../../models/settings.dart";
 import "package:provider/provider.dart";
 
 class Settings extends StatelessWidget {
-  final colorChoices = [
+  static const colorChoices = [
     Colors.red,
     Colors.amber,
     Colors.yellow,
@@ -19,6 +21,7 @@ class Settings extends StatelessWidget {
     Colors.purple,
     Colors.pink
   ];
+  final authService = AuthService();
   Settings({super.key});
 
   @override
@@ -129,7 +132,11 @@ class Settings extends StatelessWidget {
                                           MaterialStateProperty.all(
                                               Colors.red)),
                                   child: const Text("Log out"),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pushNamedAndRemoveUntil(context,
+                                        Login.routeName, (route) => false);
+                                    authService.logout();
+                                  },
                                 ),
                               ), //TODO use auth service
                             ],

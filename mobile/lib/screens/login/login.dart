@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/services/auth.service.dart';
+import 'package:mobile/widgets/root_container.dart';
 import 'package:mobile/widgets/styled_text.dart';
 import './login_field.dart';
-import "../patients/patients.dart";
-import "../../stores/root.dart";
-import "../../widgets/search_bar.dart";
-import "package:shared_preferences/shared_preferences.dart";
-
-final Root rootStore = Root();
 
 class Login extends StatefulWidget {
   static const String routeName = "/login";
@@ -23,8 +18,9 @@ class _LoginState extends State<Login> {
   late TextEditingController _codeController; //TODO add verification email
   final PageController _pageController = PageController();
   final GlobalKey<FormState> _formKey = GlobalKey();
-
   final authService = AuthService();
+
+  bool _isFetching = false;
 
   @override
   void initState() {
@@ -91,48 +87,63 @@ class _LoginState extends State<Login> {
   // }
 
   void onEmailSubmit(BuildContext context) {
-    //TODO:
     if (_formKey.currentState!.validate()) {
-      // rootStore.changeScreen(screen: Screen.patients);
+      setState(() {
+        _isFetching = true;
+      });
       authService
           .login(_emailController.value.text, _passwordController.value.text)
           .then((_) {
-        Navigator.pushNamedAndRemoveUntil(context, "/root", (route) => false);
+        Navigator.pushNamedAndRemoveUntil(
+            context, RootContainer.routeName, (route) => false);
       }).catchError((error, stacktrace) {
-        print(error);
-        print(stacktrace);
-        const snackBar = SnackBar(
+        final snackBar = SnackBar(
           content: StyledText(
-            'Authentication Failed',
+            '$error',
             textAlign: TextAlign.center,
             size: 20,
             bold: true,
             color: Colors.white,
           ),
-          backgroundColor: Color.fromARGB(255, 128, 28, 21),
-          duration: Duration(seconds: 5),
-          width: 300,
+          backgroundColor: const Color.fromARGB(255, 166, 24, 14),
+          duration: const Duration(seconds: 5),
           behavior: SnackBarBehavior.floating,
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }).whenComplete(() {
+        setState(() {
+          _isFetching = false;
+        });
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: _formKey,
-        child: Scaffold(
+    return SafeArea(
+        child: Form(
+      key: _formKey,
+      child: Scaffold(
+          appBar: _isFetching
+              ? const PreferredSize(
+                  preferredSize: Size.fromHeight(5),
+                  child: LinearProgressIndicator(
+                    minHeight: 5,
+                  ))
+              : null,
           body: Center(
-              child: Container(
-                  //TODO use form widget
-                  //TODO add logo
+              child: SizedBox(
                   width: 500, //TODO responsive
-                  padding: const EdgeInsets.only(top: 100),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      Padding(
+                          padding: const EdgeInsets.all(50),
+                          child: Image.asset(
+                            "assets/icons/horizontal_transparent.png",
+                            width: 150,
+                            height: 150,
+                          )),
                       LoginField(
                         controller: _emailController,
                         label: "Email",
@@ -144,16 +155,18 @@ class _LoginState extends State<Login> {
                         isPassword: true,
                       ),
                       ElevatedButton(
-                        onPressed: () {
-                          onEmailSubmit(context);
-                        },
+                        onPressed: _isFetching
+                            ? null
+                            : () {
+                                onEmailSubmit(context);
+                              },
                         style: ElevatedButton.styleFrom(
                             fixedSize:
                                 const Size.fromHeight(40)), //TODO responsive
-                        child: const Text("Submit"),
+                        child: const Text("Login"),
                       ),
                     ],
-                  ))),
-        ));
+                  )))),
+    ));
   }
 }

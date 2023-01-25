@@ -61,7 +61,9 @@ abstract class _Settings with Store {
     final savedPrimaryColor = await settingsService.primaryColor;
     final savedUnits = await settingsService.units;
     final user = await settingsService.user;
-    setJoinCode(user['joinCode']);
+    if (user['joinCode'] != null) {
+      setJoinCode(user['joinCode']);
+    }
     setIsDark(savedIsDark);
     setPrimaryColor(savedPrimaryColor);
     setUnits(savedUnits);

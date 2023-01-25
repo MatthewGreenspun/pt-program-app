@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 import "../stores/root.dart";
-import "../screens/login/login.dart";
 import "../screens/patients/patients.dart";
 import "../screens/exercises/exercises.dart";
 import "../screens/programs/programs.dart";
@@ -23,21 +23,23 @@ class _RootContainerState extends State<RootContainer> {
     const Programs(),
     Settings()
   ];
-  int _idx = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_idx],
-      bottomNavigationBar: BottomNavigation(
-        idx: _idx,
-        onTap: (value) {
-          setState(() {
-            _idx = value;
-          });
-        },
-      ),
-      floatingActionButton: null,
-    );
+    return Consumer<RootStore>(
+        builder: (_, rootStore, __) => Observer(
+            builder: (_) => SafeArea(
+                top: true,
+                bottom: false,
+                child: Scaffold(
+                  body: rootStore.screen,
+                  bottomNavigationBar: BottomNavigation(
+                    idx: rootStore.screenIdx,
+                    onTap: (idx) {
+                      rootStore.setScreen(idx);
+                    },
+                  ),
+                  floatingActionButton: null,
+                ))));
   }
 }

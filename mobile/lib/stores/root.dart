@@ -1,27 +1,36 @@
-import 'dart:ffi';
-
 import "package:flutter/material.dart";
 import 'package:mobx/mobx.dart';
-import "../screens/login/login.dart";
+import '../screens/exercises/exercises.dart';
+import '../screens/patients/patients.dart';
+import '../screens/programs/programs.dart';
+import '../screens/settings/settings.dart';
 part 'root.g.dart';
 
 enum Screen {
-  login,
-  home,
   patients,
   exercises,
   programs,
   settings,
 }
 
-class Root = _Root with _$Root;
+class RootStore = _Root with _$RootStore;
 
 abstract class _Root with Store {
+  final List<Widget> _screens = [
+    const Patients(),
+    const Exercises(),
+    const Programs(),
+    Settings()
+  ];
+
   @observable
-  Screen screen = Screen.login;
+  int screenIdx = 0;
+
+  @computed
+  Widget get screen => _screens[screenIdx];
 
   @action
-  void changeScreen({required Screen screen}) {
-    this.screen = screen;
+  void setScreen(int idx) {
+    screenIdx = idx;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/services/settings.service.dart';
+import 'package:mobile/stores/root.dart';
 import 'package:mobile/stores/settings.dart';
 import 'screens/login/login.dart';
 import "package:flutter_secure_storage/flutter_secure_storage.dart";
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
           ),
           ProxyProvider<SettingsService, SettingsStore>(
               update: (_, settingsService, __) =>
-                  SettingsStore(settingsService)..readSavedSettings())
+                  SettingsStore(settingsService)..readSavedSettings()),
+          Provider<RootStore>(create: (_) => RootStore())
         ],
         child: Consumer<SettingsStore>(
             builder: (_, settingsStore, __) => Observer(
@@ -45,7 +47,11 @@ class MyApp extends StatelessWidget {
                               secondary: settingsStore.primaryColor,
                             )),
                       home: isLoggedIn ? const RootContainer() : const Login(),
-                      routes: {"/root": (context) => const RootContainer()},
+                      routes: {
+                        RootContainer.routeName: (context) =>
+                            const RootContainer(),
+                        Login.routeName: (context) => const Login()
+                      },
                     ))));
   }
 }

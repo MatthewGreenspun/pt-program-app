@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import './base.service.dart';
 
 class AuthService extends BaseService {
@@ -9,10 +11,19 @@ class AuthService extends BaseService {
         headers: {"content-type": "application/json"},
         auth: false);
     if (res['error'] != null) {
-      throw "Authorization Failed";
+      switch (res['error']) {
+        case "Unauthorized":
+          throw "Incorrect email or password";
+        default:
+          throw "Failed to log in";
+      }
     }
     if (res['token'] != null) {
       await setAuthToken(res['token']);
     }
+  }
+
+  Future<void> logout() async {
+    await BaseService.secureStorage.delete(key: "token");
   }
 }
