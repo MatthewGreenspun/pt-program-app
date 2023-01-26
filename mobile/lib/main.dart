@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/services/exercises.service.dart';
 import 'package:mobile/services/settings.service.dart';
+import 'package:mobile/stores/exercises.dart';
 import 'package:mobile/stores/root.dart';
 import 'package:mobile/stores/settings.dart';
 import 'screens/login/login.dart';
@@ -28,6 +30,13 @@ class MyApp extends StatelessWidget {
           ProxyProvider<SettingsService, SettingsStore>(
               update: (_, settingsService, __) =>
                   SettingsStore(settingsService)..readSavedSettings()),
+          Provider<ExercisesService>(
+            create: (_) => ExercisesService(),
+          ),
+          ProxyProvider<ExercisesService, ExercisesStore>(
+            update: (_, exercisesService, __) =>
+                ExercisesStore(exercisesService)..fetchExercises(),
+          ),
           Provider<RootStore>(create: (_) => RootStore())
         ],
         child: Consumer<SettingsStore>(

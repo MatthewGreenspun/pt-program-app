@@ -1,27 +1,28 @@
 class Exercise {
   String id;
   String name;
-  int sets;
-  double weight;
-  int reps;
-  double time;
-  String? mediaLink;
-  String? notes;
-  Exercise(this.id, this.name, this.weight, this.sets, this.reps, this.time,
-      this.mediaLink, this.notes);
+  String mediaLink;
+  String description;
+  Exercise(this.id, this.name, this.mediaLink, this.description);
 }
 
-class ExerciseInProgress extends Exercise {
+class ProgramExercise extends Exercise {
+  int sets;
+  int reps;
+  int time;
+  double weight;
   bool isDone;
-  ExerciseInProgress(
+  String notes;
+  ProgramExercise(
       {required String id,
       required String name,
-      required int sets,
-      double weight = 0,
-      int reps = 0,
-      double time = 0,
+      required this.sets,
+      this.weight = 0,
+      this.reps = 0,
+      this.time = 0,
       String mediaLink = "",
-      String notes = "",
+      String description = "",
+      this.notes = "",
       this.isDone = false})
-      : super(id, name, weight, sets, reps, time, mediaLink, notes);
+      : super(id, name, mediaLink, description);
 }
