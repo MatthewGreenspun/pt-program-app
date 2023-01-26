@@ -2,6 +2,6 @@ import 'exercise.dart';
 
 class Program {
   String id;
-  List<Exercise> exercises;
+  List<ProgramExercise> exercises;
   Program(this.id, this.exercises);
 }

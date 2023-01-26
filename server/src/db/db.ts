@@ -7,7 +7,7 @@ const pool = new Pool({
 
 export function query<T extends QueryResultRow>(
   text: string,
-  params: Array<any>
+  params?: Array<any>
 ) {
   return pool.query<T, any[]>(text, params);
 }

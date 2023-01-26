@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "../../models/exercise.dart";
 
 class ProgramCard extends StatelessWidget {
-  final ExerciseInProgress exercise;
+  final Exercise exercise;
   const ProgramCard({super.key, required this.exercise});
 
   @override

@@ -9,8 +9,8 @@ class SettingsStore extends _Settings with _$SettingsStore {
 }
 
 abstract class _Settings with Store {
-  SettingsService settingsService;
-  _Settings(this.settingsService);
+  final SettingsService _settingsService;
+  _Settings(this._settingsService);
 
   @observable
   Unit units = Unit.imperial;
@@ -18,7 +18,7 @@ abstract class _Settings with Store {
   @action
   void setUnits(Unit value) {
     units = value;
-    settingsService.setUnits(value);
+    _settingsService.setUnits(value);
   }
 
   @observable
@@ -35,7 +35,7 @@ abstract class _Settings with Store {
   @action
   void setIsDark(bool value) {
     isDark = value;
-    settingsService.setIsDark(value);
+    _settingsService.setIsDark(value);
   }
 
   @observable
@@ -44,7 +44,7 @@ abstract class _Settings with Store {
   @action
   void setPrimaryColor(MaterialColor value) {
     primaryColor = value;
-    settingsService.setPrimaryColor(value);
+    _settingsService.setPrimaryColor(value);
   }
 
   @observable
@@ -57,10 +57,10 @@ abstract class _Settings with Store {
 
   @action
   Future<void> readSavedSettings() async {
-    final savedIsDark = await settingsService.isDark;
-    final savedPrimaryColor = await settingsService.primaryColor;
-    final savedUnits = await settingsService.units;
-    final user = await settingsService.user;
+    final savedIsDark = await _settingsService.isDark;
+    final savedPrimaryColor = await _settingsService.primaryColor;
+    final savedUnits = await _settingsService.units;
+    final user = await _settingsService.user;
     if (user['joinCode'] != null) {
       setJoinCode(user['joinCode']);
     }
