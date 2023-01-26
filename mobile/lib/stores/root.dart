@@ -23,11 +23,30 @@ abstract class _Root with Store {
     Settings()
   ];
 
+  final List<Widget?> _floatingActionButtons = [
+    FloatingActionButton(
+      child: const Icon(Icons.add),
+      onPressed: () {},
+    ),
+    FloatingActionButton(
+      onPressed: () {},
+      child: const Icon(Icons.add),
+    ),
+    FloatingActionButton(
+      onPressed: () {},
+      child: const Icon(Icons.add),
+    ),
+    null,
+  ];
+
   @observable
   int screenIdx = 0;
 
   @computed
   Widget get screen => _screens[screenIdx];
+
+  @computed
+  get floatingActionButton => _floatingActionButtons[screenIdx];
 
   @action
   void setScreen(int idx) {

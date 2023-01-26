@@ -17,13 +17,6 @@ class RootContainer extends StatefulWidget {
 }
 
 class _RootContainerState extends State<RootContainer> {
-  final List<Widget> _pages = [
-    const Patients(),
-    const Exercises(),
-    const Programs(),
-    Settings()
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Consumer<RootStore>(
@@ -39,7 +32,7 @@ class _RootContainerState extends State<RootContainer> {
                       rootStore.setScreen(idx);
                     },
                   ),
-                  floatingActionButton: null,
+                  floatingActionButton: rootStore.floatingActionButton,
                 ))));
   }
 }
