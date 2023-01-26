@@ -13,11 +13,11 @@ import "package:provider/provider.dart";
 
 class Settings extends StatelessWidget {
   static const colorChoices = [
-    Colors.red,
     Colors.amber,
     Colors.yellow,
     Colors.green,
     Colors.blue,
+    Colors.cyan,
     Colors.purple,
     Colors.pink
   ];
