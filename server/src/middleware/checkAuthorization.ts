@@ -20,8 +20,7 @@ export function checkAuthorization(
       (error, user) => {
         if (error) {
           res.status(403).json({ error: "Unauthorized" });
-        }
-        if (user) {
+        } else if (user) {
           (req as AuthRequest).user = user;
           next();
         }

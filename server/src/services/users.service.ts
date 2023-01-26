@@ -1,5 +1,6 @@
 import { query } from "../db/db";
 import { Doctor } from "../models/Doctor";
+import { Patient } from "../models/Patient";
 import { verifyPassword } from "../utils/crypto";
 import jwt, { Secret } from "jsonwebtoken";
 
@@ -36,6 +37,24 @@ class UsersService {
     } else {
       throw "invalid email or password";
     }
+  }
+
+  async getPatients(doctorId: string) {
+    // "SELECT id, doctor_id, name, email FROM patients WHERE doctor_id = $1",
+    const { rows } = await query<string[]>(
+      `
+      SELECT patients.id, patients.doctor_id, patients.name, 
+      patients.email, ARRAY_AGG(programs.id) AS "programIds", ARRAY_AGG(programs.name) AS "programNames" 
+      FROM patients 
+      LEFT JOIN programs ON programs.patient_id = patients.id 
+      WHERE patients.doctor_id = $1
+      GROUP BY patients.id
+      `,
+      [doctorId]
+    );
+
+    const patients = rows.map((row) => Patient.fromDb(Object.values(row)));
+    return patients;
   }
 }
 export default UsersService;
