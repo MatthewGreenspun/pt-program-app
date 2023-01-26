@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/services/exercises.service.dart';
-import 'package:mobile/services/settings.service.dart';
-import 'package:mobile/stores/exercises.dart';
-import 'package:mobile/stores/root.dart';
-import 'package:mobile/stores/settings.dart';
+import 'package:mobile/services/index.dart';
+import 'package:mobile/stores/index.dart';
 import 'screens/login/login.dart';
 import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import "./widgets/root_container.dart";
