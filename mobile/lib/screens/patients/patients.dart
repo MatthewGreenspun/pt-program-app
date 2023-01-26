@@ -1,8 +1,8 @@
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import "../../widgets/bottom_navigation.dart";
-import "./patients_list.dart";
-import "../../models/user.dart";
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobile/screens/patients/patient_card.dart';
+import 'package:mobile/stores/index.dart';
+import 'package:provider/provider.dart';
 
 class Patients extends StatefulWidget {
   static const routeName = "/patients";
@@ -15,17 +15,20 @@ class Patients extends StatefulWidget {
 class _PatientsState extends State<Patients> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.all(8),
-        child: PatientsList(patients: [
-          User("", "Matthew", UserType.patient,
-              "test@test.com"), //TODO fetch from backend
-          User("", "Matthew", UserType.patient, "test@test.com"),
-          User("", "Matthew", UserType.patient, "test@test.com"),
-          User("", "Matthew", UserType.patient, "test@test.com"),
-          User("", "Matthew", UserType.patient, "test@test.com"),
-          User("", "Matthew", UserType.patient, "test@test.com"),
-        ]));
+    return Consumer<PatientsStore>(
+        builder: (_, patientsStore, __) => Observer(
+            builder: (_) => patientsStore.patients.isEmpty
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : ListView(
+                    scrollDirection: Axis.vertical,
+                    children: patientsStore.patients
+                        .map((patient) => PatientCard(
+                              patient: patient,
+                            ))
+                        .toList(),
+                  )));
   }
 }
 

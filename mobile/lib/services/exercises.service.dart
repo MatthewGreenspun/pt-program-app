@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:mobile/models/exercise.dart';
-
+import '../models/exercise.dart';
 import './base.service.dart';
 
 class ExercisesService extends BaseService {

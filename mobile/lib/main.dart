@@ -34,6 +34,13 @@ class MyApp extends StatelessWidget {
             update: (_, exercisesService, __) =>
                 ExercisesStore(exercisesService)..fetchExercises(),
           ),
+          Provider<PatientsService>(
+            create: (_) => PatientsService(),
+          ),
+          ProxyProvider<PatientsService, PatientsStore>(
+            update: (_, patientsService, __) =>
+                PatientsStore(patientsService)..fetchPatients(),
+          ),
           Provider<RootStore>(create: (_) => RootStore())
         ],
         child: Consumer<SettingsStore>(
