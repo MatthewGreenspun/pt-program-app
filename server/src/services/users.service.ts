@@ -40,7 +40,6 @@ class UsersService {
   }
 
   async getPatients(doctorId: string) {
-    // "SELECT id, doctor_id, name, email FROM patients WHERE doctor_id = $1",
     const { rows } = await query<string[]>(
       `
       SELECT patients.id, patients.doctor_id, patients.name, 
@@ -55,6 +54,17 @@ class UsersService {
 
     const patients = rows.map((row) => Patient.fromDb(Object.values(row)));
     return patients;
+  }
+
+  async createPatient(name: string, doctorId: string, email?: string) {
+    await query(
+      "INSERT INTO patients (name, doctor_id, email) values ($1, $2, $3)",
+      [name, doctorId, email ?? ""]
+    );
+  }
+
+  async deletePatient(id: string) {
+    await query("DELETE FROM patients WHERE id = $1", [id]);
   }
 }
 export default UsersService;

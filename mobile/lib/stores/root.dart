@@ -24,10 +24,7 @@ abstract class _Root with Store {
   ];
 
   final List<Widget?> _floatingActionButtons = [
-    FloatingActionButton(
-      child: const Icon(Icons.add),
-      onPressed: () {},
-    ),
+    const AddPatientsButton(),
     FloatingActionButton(
       onPressed: () {},
       child: const Icon(Icons.add),
@@ -41,6 +38,14 @@ abstract class _Root with Store {
 
   @observable
   int screenIdx = 0;
+
+  @observable
+  bool isLoading = false;
+
+  @action
+  setIsLoading(bool isLoading) {
+    this.isLoading = isLoading;
+  }
 
   @computed
   Widget get screen => _screens[screenIdx];

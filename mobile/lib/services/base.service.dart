@@ -26,6 +26,7 @@ class BaseService {
     if (auth && _authToken != null) {
       _headers['authorization'] = "Bearer $_authToken";
     }
+    _headers['content-type'] = "application/json";
     switch (method) {
       case Method.get:
         return _decodeResponse(await _client.get(uri, headers: _headers));

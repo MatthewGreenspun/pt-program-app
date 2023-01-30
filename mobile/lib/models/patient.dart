@@ -7,4 +7,9 @@ class Patient {
   List<String> programNames;
   Patient(this.id, this.doctorId, this.name, this.email, this.programIds,
       this.programNames);
+
+  @override
+  String toString() {
+    return name;
+  }
 }

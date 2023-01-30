@@ -22,6 +22,24 @@ class PatientsService extends BaseService {
     }
   }
 
+  Future<void> createPatient(String name, String? email) async {
+    final res = await request("/users/patient", Method.post,
+        data: {"name": name, "email": email});
+    if (res['error'] != null) {
+      throw res['error'];
+    }
+  }
+
+  Future<void> deletePatient(String id) async {
+    final res = await request(
+      "/users/patient/$id",
+      Method.delete,
+    );
+    if (res['error'] != null) {
+      throw res['error'];
+    }
+  }
+
   List<String> _stringifyList(List<dynamic> list) {
     return list.map((e) => e.toString()).toList();
   }

@@ -1,3 +1,4 @@
+import 'package:mobile/services/index.dart';
 import 'package:mobx/mobx.dart';
 import '../models/patient.dart';
 import "../services/patients.service.dart";
@@ -13,7 +14,20 @@ abstract class _Patients with Store {
 
   @action
   Future<void> fetchPatients() async {
-    final serverExercises = await _patientsService.getPatients();
-    patients.addAll(serverExercises);
+    final serverPatients = await _patientsService.getPatients();
+    patients.clear();
+    patients.addAll(serverPatients);
+  }
+
+  @action
+  Future<void> createPatient(String name, String? email) async {
+    await _patientsService.createPatient(name, email);
+    await fetchPatients();
+  }
+
+  @action
+  Future<void> deletePatient(String id) async {
+    await _patientsService.deletePatient(id);
+    await fetchPatients();
   }
 }

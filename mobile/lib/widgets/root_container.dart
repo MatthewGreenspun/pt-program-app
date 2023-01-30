@@ -25,6 +25,13 @@ class _RootContainerState extends State<RootContainer> {
                 top: true,
                 bottom: false,
                 child: Scaffold(
+                  appBar: rootStore.isLoading
+                      ? const PreferredSize(
+                          preferredSize: Size.fromHeight(5),
+                          child: LinearProgressIndicator(
+                            minHeight: 5,
+                          ))
+                      : null,
                   body: rootStore.screen,
                   bottomNavigationBar: BottomNavigation(
                     idx: rootStore.screenIdx,
