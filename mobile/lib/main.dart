@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/services/index.dart';
+import 'package:mobile/services/programs.service.dart';
 import 'package:mobile/stores/index.dart';
 import 'screens/login/login.dart';
 import "package:flutter_secure_storage/flutter_secure_storage.dart";
@@ -41,6 +42,12 @@ class MyApp extends StatelessWidget {
             update: (_, patientsService, __) =>
                 PatientsStore(patientsService)..fetchPatients(),
           ),
+          Provider<ProgramsService>(
+            create: (_) => ProgramsService(),
+          ),
+          ProxyProvider<ProgramsService, ProgramsStore>(
+            update: (_, programsService, __) => ProgramsStore(programsService),
+          ),
           Provider<RootStore>(create: (_) => RootStore())
         ],
         child: Consumer<SettingsStore>(
@@ -49,7 +56,8 @@ class MyApp extends StatelessWidget {
                       title: 'PT Program',
                       theme: settingsStore.isDark
                           ? ThemeData.dark().copyWith(
-                              bottomAppBarColor: Colors.grey[900],
+                              bottomAppBarTheme:
+                                  BottomAppBarTheme(color: Colors.grey[900]),
                               colorScheme: const ColorScheme.dark().copyWith(
                                 primary: settingsStore.primaryColor,
                                 secondary: settingsStore.primaryColor,

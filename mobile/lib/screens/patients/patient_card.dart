@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:mobile/services/programs.service.dart';
 import 'package:mobile/stores/index.dart';
 import 'package:mobile/widgets/index.dart';
 import 'package:provider/provider.dart';
@@ -17,8 +18,8 @@ class PatientCard extends StatelessWidget {
           .then((value) => rootStore.setIsLoading(false));
     }
 
-    return Consumer2<RootStore, PatientsStore>(
-        builder: (_, rootStore, patientsStore, __) => Card(
+    return Consumer3<RootStore, PatientsStore, ProgramsStore>(
+        builder: (_, rootStore, patientsStore, programsStore, __) => Card(
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: Container(
                 padding: const EdgeInsets.all(16),
@@ -49,8 +50,12 @@ class PatientCard extends StatelessWidget {
                         .asMap()
                         .entries
                         .map((entry) => ElevatedButton.icon(
-                              onPressed:
-                                  () {}, //TODO add program to programs page
+                              onPressed: () async {
+                                final programId = patient.programIds[entry.key];
+                                programsStore.addProgram(programId);
+                                rootStore.setScreen(Screen.programs
+                                    .index); //TODO: Animate page transition
+                              },
                               icon: const Icon(Icons.view_list),
                               label: Text("${patient.name} - ${entry.value}"),
                             ))
