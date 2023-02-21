@@ -32,6 +32,8 @@ Contains shared widgets.
 
 Contains SQL code and PostgreSQL client.
 
+![SQL Architecture](SQL_Architecture.png)
+
 #### src/middleware
 
 Contains middleware used in the Express API.
