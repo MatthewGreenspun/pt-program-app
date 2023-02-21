@@ -1,3 +1,8 @@
+enum Units {
+  imperial,
+  metric,
+}
+
 export class Exercise {
   id: string;
   name: string;
@@ -33,26 +38,52 @@ export class ProgramExercise extends Exercise {
   reps: number;
   time: number;
   weight: number;
-  isDone: boolean;
+  units: Units = Units.imperial;
   notes: string;
+  hours: number;
+  minutes: number;
+  seconds: number;
   constructor(
     id: string,
     name: string,
-    sets: number,
-    weight: number = 0,
-    reps: number = 0,
-    time: number = 0,
     mediaLink: string = "",
     description: string = "",
     notes: string = "",
-    isDone: boolean = false
+    sets: number,
+    weight: number = 0,
+    units: Units = Units.imperial,
+    reps: number = 0,
+    time: number = 0,
+    hours: number,
+    minutes: number,
+    seconds: number
   ) {
     super(id, name, mediaLink, description);
     this.sets = sets;
     this.weight = weight;
-    this.reps = reps;
+    (this.units = units), (this.reps = reps);
     this.time = time;
     this.notes = notes;
-    this.isDone = isDone;
+    this.hours = hours;
+    this.minutes = minutes;
+    this.seconds = seconds;
+  }
+
+  static fromDb(args: any[]) {
+    return new this(
+      args[0],
+      args[1],
+      args[2] ?? "",
+      args[3] ?? "",
+      args[4] ?? "",
+      args[5],
+      args[6],
+      args[7],
+      args[8],
+      args[9],
+      args[10],
+      args[11],
+      args[12]
+    );
   }
 }

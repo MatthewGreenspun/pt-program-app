@@ -25,7 +25,7 @@ class Exercises extends StatelessWidget {
                     children: exercisesStore.exercises
                         .map((exercise) => ExerciseCard(
                               name: exercise.name,
-                              mediaLink: "assets/images/exercise_img_test.png",
+                              // mediaLink: "assets/images/exercise_img_test.png",
                               description: exercise.description,
                             ))
                         .toList())));

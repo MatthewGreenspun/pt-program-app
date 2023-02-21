@@ -1,3 +1,8 @@
+import 'package:mobx/mobx.dart';
+part 'exercise.g.dart';
+
+enum Units { imperial, metric }
+
 class Exercise {
   String id;
   String name;
@@ -6,23 +11,57 @@ class Exercise {
   Exercise(this.id, this.name, this.mediaLink, this.description);
 }
 
-class ProgramExercise extends Exercise {
+class ProgramExercise = _ProgramExercise with _$ProgramExercise;
+
+abstract class _ProgramExercise with Store {
+  String id;
+  String name;
+  String mediaLink;
+  String description;
   int sets;
   int reps;
-  int time;
   double weight;
-  bool isDone;
+  Units units;
   String notes;
-  ProgramExercise(
-      {required String id,
-      required String name,
+  Duration duration;
+  @observable
+  bool isDone;
+  _ProgramExercise(
+      {required this.id,
+      required this.name,
+      this.mediaLink = "",
+      this.description = "",
       required this.sets,
-      this.weight = 0,
       this.reps = 0,
-      this.time = 0,
-      String mediaLink = "",
-      String description = "",
+      this.weight = 0,
+      this.units = Units.imperial,
       this.notes = "",
-      this.isDone = false})
-      : super(id, name, mediaLink, description);
+      this.isDone = false,
+      int hours = 0,
+      int minutes = 0,
+      int seconds = 0})
+      : duration = Duration(hours: hours, minutes: minutes, seconds: seconds);
+
+  @override
+  String toString() {
+    return """
+
+$name
+$sets sets of $reps
+$weight ${units == Units.imperial ? "lbs" : "kgs"}
+$duration
+""";
+  }
+
+  @action
+  void setIsDone(bool _isDone) {
+    isDone = _isDone;
+  }
+
+  @computed
+  String get fmtWeight =>
+      "$weight ${units == Units.metric ? "kg" : "lb"}${weight == 1 ? "" : "s"}";
+
+  @computed
+  String get fmtSets => "$sets set${sets == 1 ? "" : "s"} of $reps";
 }
