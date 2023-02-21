@@ -18,6 +18,7 @@ dependencies:
   flutter_mobx: ^2.0.6+5
   provider: ^6.0.5
   http: ^0.13.5
+  intl: ^0.18.0
 
 dev_dependencies:
   build_runner: ^2.3.3
@@ -50,3 +51,4 @@ flutter:
     - assets/icons/rotated.png
     - assets/images/exercise_img_test.png
     - assets/images/placeholder_exercise.png
+    - assets/images/no_programs_arrow.png
