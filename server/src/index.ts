@@ -2,6 +2,7 @@ import express from "express";
 import usersRouter from "./routes/users.router";
 import authRouter from "./routes/auth.router";
 import exercisesRouter from "./routes/exercises.router";
+import programsRouter from "./routes/programs.router";
 
 require("dotenv").config();
 const app = express();
@@ -10,6 +11,7 @@ app.use(express.json());
 app.use("/users", usersRouter);
 app.use("/auth", authRouter);
 app.use("/exercises", exercisesRouter);
+app.use("/programs", programsRouter);
 
 app.get("/", (req, res) => {
   res.json({ msg: "test", ip: req.ip, headers: req.headers });
