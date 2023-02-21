@@ -41,7 +41,7 @@ class UsersService {
 
   async getPatients(doctorId: string) {
     const { rows } = await query<string[]>(
-      `
+      `--sql
       SELECT patients.id, patients.doctor_id, patients.name, 
       patients.email, ARRAY_AGG(programs.id) AS "programIds", ARRAY_AGG(programs.name) AS "programNames" 
       FROM patients 
