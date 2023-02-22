@@ -52,5 +52,36 @@ exercises: $exercises
 """;
   }
 
+  @override
+  int get hashCode {
+    return id.hashCode;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! ActiveProgram) return false;
+    if (other.id != id) return false;
+    return true;
+  }
+
   String get identifier => "$patient $name";
+}
+
+class ProgramData {
+  String id;
+  String name;
+  ProgramData(this.id, this.name);
+
+  @override
+  int get hashCode {
+    return id.hashCode;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! ProgramData) return false;
+    if (other.id != id) return false;
+    if (other.name != name) return false;
+    return true;
+  }
 }

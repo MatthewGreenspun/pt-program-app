@@ -1,13 +1,12 @@
 import "package:flutter/material.dart";
 import "package:flutter_mobx/flutter_mobx.dart";
 import "package:mobile/stores/index.dart";
-import "package:mobx/mobx.dart";
 import "package:provider/provider.dart";
 import "../../models/exercise.dart";
 
-class ProgramCard extends StatelessWidget {
-  ProgramExercise exercise;
-  ProgramCard({super.key, required this.exercise});
+class ProgramExerciseCard extends StatelessWidget {
+  final ProgramExercise exercise;
+  const ProgramExerciseCard({super.key, required this.exercise});
 
   @override
   Widget build(BuildContext context) {

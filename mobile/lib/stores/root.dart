@@ -29,10 +29,7 @@ abstract class _Root with Store {
       onPressed: () {},
       child: const Icon(Icons.add),
     ),
-    FloatingActionButton(
-      onPressed: () {},
-      child: const Icon(Icons.add),
-    ),
+    const AddProgramsButton(),
     null,
   ];
 

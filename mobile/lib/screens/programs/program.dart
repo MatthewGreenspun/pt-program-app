@@ -5,8 +5,8 @@ import "package:provider/provider.dart";
 import "../../models/exercise.dart";
 import "./program_card.dart";
 
-class Program extends StatelessWidget {
-  const Program({super.key});
+class ProgramContainer extends StatelessWidget {
+  const ProgramContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class Program extends StatelessWidget {
               builder: (_) => Column(
                   children: programsStore.activeProgram.exercises
                       .map(
-                        (e) => ProgramCard(exercise: e),
+                        (e) => ProgramExerciseCard(exercise: e),
                       )
                       .toList()),
             ));

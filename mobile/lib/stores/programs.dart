@@ -2,6 +2,7 @@ import 'package:mobile/models/exercise.dart';
 import 'package:mobile/models/program.dart';
 import 'package:mobile/services/programs.service.dart';
 import 'package:mobx/mobx.dart';
+import "dart:math";
 part 'programs.g.dart';
 
 // ignore: library_private_types_in_public_api
@@ -26,6 +27,7 @@ abstract class _Programs with Store {
 
   @action
   Future<void> addProgram(String id) async {
+    if (activePrograms.any((program) => program.id == id)) return;
     final futures = await Future.wait([
       _programsService.getProgram(id),
       _programsService.getProgramExercises(id),
@@ -45,6 +47,6 @@ abstract class _Programs with Store {
   @action
   void popActiveProgram() {
     activePrograms.removeAt(activeIdx);
-    activeIdx--;
+    activeIdx = max(0, activeIdx - 1);
   }
 }
