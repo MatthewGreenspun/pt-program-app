@@ -5,7 +5,7 @@ import 'package:mobile/models/program.dart';
 import 'package:mobile/stores/index.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/styled_text.dart';
-import "./program.dart";
+import "./program_container.dart";
 
 class Programs extends StatelessWidget {
   const Programs({super.key});

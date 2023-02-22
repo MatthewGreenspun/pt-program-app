@@ -28,9 +28,18 @@ class ProgramExerciseCard extends StatelessWidget {
                               activeColor:
                                   Theme.of(context).colorScheme.primary,
                             )),
-                        Text(exercise.name),
-                        Text(exercise.fmtWeight),
-                        Text(exercise.fmtSets)
+                        Expanded(
+                          child: Text(exercise.name),
+                        ),
+                        Expanded(
+                          child: Text(exercise.fmtWeight),
+                        ),
+                        Expanded(
+                          child: Text(exercise.fmtSets),
+                        ),
+                        Expanded(
+                          child: Text(exercise.fmtTime),
+                        )
                       ]),
                 ))));
   }
