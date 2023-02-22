@@ -19,7 +19,7 @@ class ExerciseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: Make more responsive
     final deviceWidth = MediaQuery.of(context).size.width;
-    final containerWidth = deviceWidth > 500 ? (deviceWidth / 2) : deviceWidth;
+    final containerWidth = deviceWidth > 500 ? (deviceWidth / 3) : deviceWidth;
     return Container(
       width: containerWidth,
       padding: const EdgeInsets.all(24),
@@ -34,24 +34,18 @@ class ExerciseCard extends StatelessWidget {
               Expanded(
                   child: StyledText(
                 name,
-                size: 35,
+                size: 30,
                 bold: true,
                 textAlign: TextAlign.left,
               )),
-              deviceWidth < 500
-                  ? IconButton(
-                      onPressed: onEdit,
-                      icon: const Icon(Icons.edit),
-                    )
-                  : ElevatedButton.icon(
-                      onPressed: onEdit,
-                      icon: const Icon(Icons.edit),
-                      label: const Text("Edit"),
-                    )
+              IconButton(
+                onPressed: onEdit,
+                icon: const Icon(Icons.edit),
+              )
             ]),
             StyledText(
               description,
-              size: 20,
+              size: 15,
             ),
             ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(8)),

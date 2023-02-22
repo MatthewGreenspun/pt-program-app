@@ -64,7 +64,7 @@ abstract class _Root with Store {
     setScreenIdx(idx);
     if (animate) {
       pageController.animateToPage(idx,
-          duration: const Duration(milliseconds: 150), curve: Curves.easeInOut);
+          duration: const Duration(milliseconds: 250), curve: Curves.easeOut);
     } else {
       pageController.jumpToPage(idx);
     }

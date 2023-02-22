@@ -21,14 +21,14 @@ class PatientCard extends StatelessWidget {
         builder: (_, rootStore, patientsStore, programsStore, __) => Card(
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(child: StyledText(patient.name, size: 35)),
+                          Expanded(child: StyledText(patient.name, size: 30)),
                           Row(
                             children: [
                               IconButton(
@@ -44,7 +44,7 @@ class PatientCard extends StatelessWidget {
                             ],
                           )
                         ]),
-                    const StyledText("Programs", size: 25),
+                    const StyledText("Programs", size: 20),
                     ...patient.programNames
                         .asMap()
                         .entries

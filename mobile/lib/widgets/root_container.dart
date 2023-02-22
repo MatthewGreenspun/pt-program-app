@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import "../stores/root.dart";
-import "../screens/patients/patients.dart";
-import "../screens/exercises/exercises.dart";
-import "../screens/programs/programs.dart";
-import "../screens/settings/settings.dart";
 import "./bottom_navigation.dart";
 
 class RootContainer extends StatefulWidget {
@@ -33,6 +29,7 @@ class _RootContainerState extends State<RootContainer> {
                           ))
                       : null,
                   body: PageView(
+                    physics: const NeverScrollableScrollPhysics(),
                     controller: rootStore.pageController,
                     onPageChanged: (idx) => rootStore.setScreenIdx(idx),
                     children: rootStore.screens,

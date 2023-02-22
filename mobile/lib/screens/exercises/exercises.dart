@@ -21,7 +21,7 @@ class Exercises extends StatelessWidget {
                     scrollDirection: Axis.vertical,
                     mainAxisSpacing: _spacing,
                     crossAxisSpacing: _spacing,
-                    childAspectRatio: numColumns == 1 ? 1 : 6 / 5,
+                    // childAspectRatio: numColumns == 1 ? 1 : 6 / 5,
                     children: exercisesStore.exercises
                         .map((exercise) => ExerciseCard(
                               name: exercise.name,
