@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import 'package:mobile/services/programs.service.dart';
 import 'package:mobile/stores/index.dart';
 import 'package:mobile/widgets/index.dart';
 import 'package:provider/provider.dart';
@@ -51,10 +50,13 @@ class PatientCard extends StatelessWidget {
                         .entries
                         .map((entry) => ElevatedButton.icon(
                               onPressed: () async {
+                                rootStore.setIsLoading(true);
                                 final programId = patient.programIds[entry.key];
-                                programsStore.addProgram(programId);
-                                rootStore.setScreen(Screen.programs
-                                    .index); //TODO: Animate page transition
+                                programsStore.addProgram(programId).then((_) {
+                                  rootStore.setIsLoading(false);
+                                  rootStore.changeScreen(Screen.programs.index,
+                                      animate: true);
+                                });
                               },
                               icon: const Icon(Icons.view_list),
                               label: Text("${patient.name} - ${entry.value}"),

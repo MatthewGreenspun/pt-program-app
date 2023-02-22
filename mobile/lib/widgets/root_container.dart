@@ -32,11 +32,15 @@ class _RootContainerState extends State<RootContainer> {
                             minHeight: 5,
                           ))
                       : null,
-                  body: rootStore.screen,
+                  body: PageView(
+                    controller: rootStore.pageController,
+                    onPageChanged: (idx) => rootStore.setScreenIdx(idx),
+                    children: rootStore.screens,
+                  ),
                   bottomNavigationBar: BottomNavigation(
                     idx: rootStore.screenIdx,
                     onTap: (idx) {
-                      rootStore.setScreen(idx);
+                      rootStore.changeScreen(idx);
                     },
                   ),
                   floatingActionButton: rootStore.floatingActionButton,

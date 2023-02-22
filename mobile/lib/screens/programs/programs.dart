@@ -43,11 +43,11 @@ class Programs extends StatelessWidget {
                             height: height,
                             child: Stack(children: [
                               const Positioned(
-                                  bottom: 500,
-                                  right: 200,
+                                  bottom: 550,
+                                  right: 300,
                                   child: StyledText(
                                     "No Active Programs. Add one here!",
-                                    size: 30,
+                                    size: 20,
                                     bold: true,
                                   )),
                               Positioned(
@@ -55,7 +55,7 @@ class Programs extends StatelessWidget {
                                   right: 80,
                                   child: Image.asset(
                                       //TODO: Responsive
-                                      width: 400,
+                                      width: 500,
                                       "assets/images/no_programs_arrow.png"))
                             ]))
                         : Column(children: [

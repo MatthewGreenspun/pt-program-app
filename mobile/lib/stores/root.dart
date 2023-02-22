@@ -16,7 +16,7 @@ enum Screen {
 class RootStore = _Root with _$RootStore;
 
 abstract class _Root with Store {
-  final List<Widget> _screens = [
+  final List<Widget> screens = [
     const Patients(),
     const Exercises(),
     const Programs(),
@@ -33,6 +33,10 @@ abstract class _Root with Store {
     null,
   ];
 
+  late PageController pageController;
+
+  _Root() : pageController = PageController();
+
   @observable
   int screenIdx = 0;
 
@@ -45,13 +49,24 @@ abstract class _Root with Store {
   }
 
   @computed
-  Widget get screen => _screens[screenIdx];
+  Widget get screen => screens[screenIdx];
 
   @computed
   get floatingActionButton => _floatingActionButtons[screenIdx];
 
   @action
-  void setScreen(int idx) {
+  setScreenIdx(int idx) {
     screenIdx = idx;
+  }
+
+  @action
+  void changeScreen(int idx, {bool animate = false}) {
+    setScreenIdx(idx);
+    if (animate) {
+      pageController.animateToPage(idx,
+          duration: const Duration(milliseconds: 150), curve: Curves.easeInOut);
+    } else {
+      pageController.jumpToPage(idx);
+    }
   }
 }
