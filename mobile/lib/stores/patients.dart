@@ -1,3 +1,4 @@
+import 'package:mobile/models/program.dart';
 import 'package:mobile/services/index.dart';
 import 'package:mobx/mobx.dart';
 import '../models/patient.dart';
@@ -30,4 +31,17 @@ abstract class _Patients with Store {
     await _patientsService.deletePatient(id);
     await fetchPatients();
   }
+
+  @computed
+  List<ProgramData> get programs => patients.fold(
+      [],
+      (prev, patient) => [
+            ...(patient.programIds
+                .asMap()
+                .entries
+                .map((entry) => ProgramData(entry.value,
+                    "${patient.name} ${patient.programNames[entry.key]}"))
+                .toList()),
+            ...prev
+          ]);
 }
