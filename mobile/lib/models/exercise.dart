@@ -11,6 +11,7 @@ class Exercise {
   Exercise(this.id, this.name, this.mediaLink, this.description);
 }
 
+// ignore: library_private_types_in_public_api
 class ProgramExercise = _ProgramExercise with _$ProgramExercise;
 
 abstract class _ProgramExercise with Store {
@@ -23,7 +24,9 @@ abstract class _ProgramExercise with Store {
   double weight;
   Units units;
   String notes;
-  Duration duration;
+  int hours = 0;
+  int minutes = 0;
+  int seconds = 0;
   @observable
   bool isDone;
   _ProgramExercise(
@@ -37,10 +40,9 @@ abstract class _ProgramExercise with Store {
       this.units = Units.imperial,
       this.notes = "",
       this.isDone = false,
-      int hours = 0,
-      int minutes = 0,
-      int seconds = 0})
-      : duration = Duration(hours: hours, minutes: minutes, seconds: seconds);
+      this.hours = 0,
+      this.minutes = 0,
+      this.seconds = 0});
 
   @override
   String toString() {
@@ -59,9 +61,26 @@ $duration
   }
 
   @computed
-  String get fmtWeight =>
-      "$weight ${units == Units.metric ? "kg" : "lb"}${weight == 1 ? "" : "s"}";
+  String get fmtWeight {
+    if (weight == 0.0) return "no weight";
+    return "$weight ${units == Units.metric ? "kg" : "lb"}${weight == 1 ? "" : "s"}";
+  }
 
   @computed
-  String get fmtSets => "$sets set${sets == 1 ? "" : "s"} of $reps";
+  String get fmtSets {
+    if (reps == 0) return "$sets sets";
+    return "$sets set${sets == 1 ? "" : "s"} of $reps";
+  }
+
+  @computed
+  Duration get duration =>
+      Duration(hours: hours, minutes: minutes, seconds: seconds);
+
+  @computed
+  String get fmtTime {
+    if (hours > 0) return "${hours}h ${minutes}m ${seconds}s";
+    if (minutes > 0) return "${minutes}m ${seconds}s";
+    if (seconds > 0) return "$seconds seconds";
+    return "no time";
+  }
 }

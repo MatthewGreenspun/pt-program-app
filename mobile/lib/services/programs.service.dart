@@ -34,8 +34,8 @@ class ProgramsService extends BaseService {
               notes: e['notes'],
               description: e['description'],
               hours: e['hours'],
-              minutes: e['hours'],
-              seconds: e['hours'],
+              minutes: e['minutes'],
+              seconds: e['seconds'],
               isDone: false))
           .toList();
       return exercises;
