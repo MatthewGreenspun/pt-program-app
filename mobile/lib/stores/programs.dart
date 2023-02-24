@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:mobile/models/exercise.dart';
 import 'package:mobile/models/program.dart';
 import 'package:mobile/services/programs.service.dart';
@@ -48,5 +50,13 @@ abstract class _Programs with Store {
   void popActiveProgram() {
     activePrograms.removeAt(activeIdx);
     activeIdx = max(0, activeIdx - 1);
+  }
+
+  @action
+  Future<void> editWeight(ProgramExercise exercise, double weight) async {
+    exercise.timer?.cancel();
+    exercise.setWeight(weight);
+    exercise.timer = Timer(const Duration(seconds: 10),
+        () async => await _programsService.editProgramExercise(exercise));
   }
 }

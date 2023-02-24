@@ -25,6 +25,7 @@ class ProgramsService extends BaseService {
       final exercises = (res['exercises'] as List<dynamic>)
           .map((e) => ProgramExercise(
               id: e['id'],
+              exerciseId: e['exerciseId'],
               name: e['name'],
               sets: e['sets'],
               reps: e['reps'],
@@ -44,5 +45,9 @@ class ProgramsService extends BaseService {
     } else {
       throw "Failed to fetch program exercises";
     }
+  }
+
+  Future<void> editProgramExercise(ProgramExercise exercise) async {
+    await request("/programs/exercises/", Method.put, data: exercise.toJson());
   }
 }

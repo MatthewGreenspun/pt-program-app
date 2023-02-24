@@ -3,3 +3,4 @@ export "./styled_text.dart";
 export "./root_container.dart";
 export "./search_bar.dart";
 export "./toggle_switch.dart";
+export "./increment_decrement_button.dart";

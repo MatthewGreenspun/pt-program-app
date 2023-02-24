@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_mobx/flutter_mobx.dart";
 import "package:mobile/stores/index.dart";
+import "package:mobile/widgets/index.dart";
 import "package:provider/provider.dart";
 import "../../models/exercise.dart";
 
@@ -32,14 +33,28 @@ class ProgramExerciseCard extends StatelessWidget {
                           child: Text(exercise.name),
                         ),
                         Expanded(
-                          child: Text(exercise.fmtWeight),
-                        ),
+                            child: Row(
+                          children: [
+                            IncrementDecrementButton(
+                              value: exercise.weight,
+                              onPressed: (weight) =>
+                                  programsStore.editWeight(exercise, weight),
+                            ),
+                            Text(exercise.fmtWeight),
+                          ],
+                        )),
                         Expanded(
-                          child: Text(exercise.fmtSets),
-                        ),
+                            child: Row(
+                          children: [
+                            Text(exercise.fmtSets),
+                          ],
+                        )),
                         Expanded(
-                          child: Text(exercise.fmtTime),
-                        )
+                            child: Row(
+                          children: [
+                            Text(exercise.fmtTime),
+                          ],
+                        )),
                       ]),
                 ))));
   }
