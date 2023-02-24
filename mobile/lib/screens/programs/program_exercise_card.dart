@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_mobx/flutter_mobx.dart";
+import "package:mobile/screens/programs/edit_time_modal.dart";
 import "package:mobile/stores/index.dart";
 import "package:mobile/widgets/index.dart";
 import "package:provider/provider.dart";
@@ -36,9 +37,11 @@ class ProgramExerciseCard extends StatelessWidget {
                             child: Row(
                           children: [
                             IncrementDecrementButton(
+                              delta: 0.5,
                               value: exercise.weight,
-                              onPressed: (weight) =>
-                                  programsStore.editWeight(exercise, weight),
+                              onPressed: (weight) => programsStore.editExercise(
+                                  exercise,
+                                  weight: weight.toDouble()),
                             ),
                             Text(exercise.fmtWeight),
                           ],
@@ -46,13 +49,30 @@ class ProgramExerciseCard extends StatelessWidget {
                         Expanded(
                             child: Row(
                           children: [
+                            IncrementDecrementButton(
+                                value: exercise.sets,
+                                onPressed: (sets) => programsStore.editExercise(
+                                    exercise,
+                                    sets: sets.toInt())),
                             Text(exercise.fmtSets),
                           ],
                         )),
                         Expanded(
                             child: Row(
                           children: [
-                            Text(exercise.fmtTime),
+                            exercise.isTimed
+                                ? EditButton(onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) =>
+                                            EditTimeModal(exercise: exercise));
+                                  })
+                                : IncrementDecrementButton(
+                                    value: exercise.reps,
+                                    onPressed: (reps) =>
+                                        programsStore.editExercise(exercise,
+                                            reps: reps.toInt())),
+                            Text(exercise.fmtRepsOrTime),
                           ],
                         )),
                       ]),

@@ -44,14 +44,19 @@ abstract class _ProgramExercise with Store {
   String name;
   String mediaLink;
   String description;
+  @observable
   int sets;
+  @observable
   int reps;
   @observable
   double weight;
   Units units;
   String notes;
+  @observable
   int hours = 0;
+  @observable
   int minutes = 0;
+  @observable
   int seconds = 0;
   @observable
   bool isDone;
@@ -85,8 +90,33 @@ $duration
   }
 
   @action
-  void setIsDone(bool _isDone) {
-    isDone = _isDone;
+  void setIsDone(bool newIsDone) {
+    isDone = newIsDone;
+  }
+
+  @action
+  void setSets(int newSets) {
+    sets = newSets;
+  }
+
+  @action
+  void setReps(int newReps) {
+    reps = newReps;
+  }
+
+  @action
+  setHours(int newHours) {
+    hours = newHours;
+  }
+
+  @action
+  setMinutes(int newMinutes) {
+    minutes = newMinutes;
+  }
+
+  @action
+  setSeconds(int newSeconds) {
+    seconds = newSeconds;
   }
 
   @action
@@ -103,10 +133,11 @@ $duration
 
   @computed
   @JsonKey(includeFromJson: false, includeToJson: false)
-  String get fmtSets {
-    if (reps == 0) return "$sets sets";
-    return "$sets set${sets == 1 ? "" : "s"} of $reps";
-  }
+  String get fmtSets => "$sets set${sets == 1 ? "" : "s"}";
+
+  @computed
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  String get fmtReps => "$reps rep${reps == 1 ? "" : "s"}";
 
   @computed
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -120,5 +151,16 @@ $duration
     if (minutes > 0) return "${minutes}m ${seconds}s";
     if (seconds > 0) return "$seconds seconds";
     return "no time";
+  }
+
+  @computed
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool get isTimed => duration != Duration.zero;
+
+  @computed
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  String get fmtRepsOrTime {
+    if (duration != Duration.zero) return fmtTime;
+    return fmtReps;
   }
 }

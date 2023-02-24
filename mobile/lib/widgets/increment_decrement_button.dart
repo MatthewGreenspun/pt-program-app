@@ -21,10 +21,14 @@ class _Button extends StatelessWidget {
 }
 
 class IncrementDecrementButton extends StatelessWidget {
-  final double value;
-  final Function(double) onPressed;
+  final num value;
+  final double delta;
+  final Function(num) onPressed;
   const IncrementDecrementButton(
-      {super.key, required this.value, required this.onPressed});
+      {super.key,
+      required this.value,
+      required this.onPressed,
+      this.delta = 1});
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +36,33 @@ class IncrementDecrementButton extends StatelessWidget {
       _Button(
         icon: const Icon(Icons.add),
         onPressed: () {
-          onPressed(value + 1);
+          onPressed(value + delta);
         },
       ),
       _Button(
         icon: const Icon(Icons.remove),
         onPressed: () {
-          onPressed(max(0, value - 1));
+          onPressed(max(0, value - delta));
         },
       )
+    ]);
+  }
+}
+
+class EditButton extends StatelessWidget {
+  final Function() onPressed;
+  const EditButton({super.key, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+      Opacity(
+          opacity: 0,
+          child: _Button(
+            icon: const Icon(Icons.remove),
+            onPressed: () {},
+          )),
+      _Button(icon: const Icon(Icons.edit), onPressed: onPressed),
     ]);
   }
 }

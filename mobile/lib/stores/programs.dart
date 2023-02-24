@@ -53,10 +53,22 @@ abstract class _Programs with Store {
   }
 
   @action
-  Future<void> editWeight(ProgramExercise exercise, double weight) async {
+  Future<void> editExercise(ProgramExercise exercise,
+      {int? sets,
+      int? reps,
+      double? weight,
+      int? hours,
+      int? minutes,
+      int? seconds}) async {
     exercise.timer?.cancel();
-    exercise.setWeight(weight);
-    exercise.timer = Timer(const Duration(seconds: 10),
+    if (sets != null) exercise.setSets(sets);
+    if (reps != null) exercise.setReps(reps);
+    if (weight != null) exercise.setWeight(weight);
+    if (hours != null) exercise.setHours(hours);
+    if (minutes != null) exercise.setMinutes(minutes);
+    if (seconds != null) exercise.setSeconds(seconds);
+    exercise.timer = Timer(
+        const Duration(seconds: 5), // Debounce
         () async => await _programsService.editProgramExercise(exercise));
   }
 }
