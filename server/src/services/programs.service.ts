@@ -22,9 +22,9 @@ class ProgramsService {
   async getProgramExercises(id: string) {
     const { rows } = await query(
       `--sql
-      SELECT id, name, mediaLink, description, notes, sets, weight, units, reps, time, hours, minutes, seconds FROM (
-        SELECT program_id, program_exercises.id as id, exercises.name as name, media_link as mediaLink, description, notes, 
-        time, sets, reps, weight, units, hours, minutes, seconds,
+      SELECT id, exerciseId, name, mediaLink, description, notes, sets, weight, units, reps, time, hours, minutes, seconds FROM (
+        SELECT program_id, exercise_modifications.exercise_id as exerciseId, program_exercises.id as id, exercises.name as name, 
+        media_link as mediaLink, description, notes, time, sets, reps, weight, units, hours, minutes, seconds,
         row_number() OVER (partition by program_exercises.exercise_id ORDER BY TIME DESC) AS row_num
         FROM program_exercises 
         JOIN exercises on program_exercises.exercise_id = exercises.id 
@@ -38,26 +38,24 @@ class ProgramsService {
   }
 
   async getExerciseProgress(id: string) {
-    query(
+    await query(
       `--sql
       SELECT sets, reps, weight, units, hours, minutes, seconds, time 
       FROM exercise_modifications WHERE exercise_id = $1 ORDER BY TIME DESC`,
       [id]
     );
   }
+
+  async updateExercise(exercise: ProgramExercise) {
+    const { exerciseId, sets, reps, weight, units, hours, minutes, seconds } =
+      exercise;
+    await query(
+      `--sql
+    INSERT INTO exercise_modifications (exercise_id, sets, reps, weight, units, hours, minutes, seconds)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    `,
+      [exerciseId, sets, reps, weight, units, hours, minutes, seconds]
+    );
+  }
 }
 export default ProgramsService;
-
-`
-SELECT programs.id, programs.name, JSON_AGG(prgm) as exercises FROM (SELECT id, name, mediaLink, description, notes, sets, weight, units, reps, time, hours, minutes, seconds FROM (
-  SELECT program_id, program_exercises.id as id, exercises.name as name, media_link as mediaLink, exercises.description, notes, 
-  time, sets, reps, weight, units, hours, minutes, seconds,
-  row_number() OVER (partition by program_exercises.exercise_id ORDER BY TIME DESC) AS row_num
-  FROM program_exercises 
-  JOIN exercises on program_exercises.exercise_id = exercises.id 
-  JOIN exercise_modifications ON exercise_modifications.exercise_id = program_exercises.id 
-  JOIN programs on programs.id = program_exercises.program_id
-  ) sub
-WHERE row_num = 1) prgm RIGHT JOIN programs ON programs.id != NULL
-GROUP BY programs.id, programs.name;
-`;

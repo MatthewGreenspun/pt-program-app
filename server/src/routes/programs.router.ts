@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { checkAuthorization } from "../middleware/checkAuthorization";
+import { ProgramExercise } from "../models/Exercise";
 import ProgramsService from "../services/programs.service";
 
 const programsService = new ProgramsService();
@@ -47,8 +48,15 @@ exerciseRouter.post("/:id", async (req, res) => {
   //TODO
 });
 
-exerciseRouter.put("/:programid/:exerciseid", async (req, res) => {
-  //TODO
+exerciseRouter.put("/", async (req, res) => {
+  console.log(req.body);
+  try {
+    await programsService.updateExercise(req.body as ProgramExercise);
+    res.status(200).json({});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error });
+  }
 });
 
 exerciseRouter.delete("/:programid/:exerciseid", async (req, res) => {

@@ -34,6 +34,7 @@ export class Exercise {
 }
 
 export class ProgramExercise extends Exercise {
+  exerciseId: string;
   sets: number;
   reps: number;
   time: number;
@@ -45,6 +46,7 @@ export class ProgramExercise extends Exercise {
   seconds: number;
   constructor(
     id: string,
+    exerciseId: string,
     name: string,
     mediaLink: string = "",
     description: string = "",
@@ -59,9 +61,11 @@ export class ProgramExercise extends Exercise {
     seconds: number
   ) {
     super(id, name, mediaLink, description);
+    this.exerciseId = exerciseId;
     this.sets = sets;
     this.weight = weight;
-    (this.units = units), (this.reps = reps);
+    this.units = units;
+    this.reps = reps;
     this.time = time;
     this.notes = notes;
     this.hours = hours;
@@ -73,17 +77,18 @@ export class ProgramExercise extends Exercise {
     return new this(
       args[0],
       args[1],
-      args[2] ?? "",
+      args[2],
       args[3] ?? "",
       args[4] ?? "",
-      args[5],
+      args[5] ?? "",
       args[6],
       args[7],
       args[8],
       args[9],
       args[10],
       args[11],
-      args[12]
+      args[12],
+      args[13]
     );
   }
 }
