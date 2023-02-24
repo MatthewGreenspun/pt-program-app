@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:mobx/mobx.dart';
 import '../screens/exercises/exercises.dart';
 import '../screens/patients/patients.dart';
+import '../screens/programs/add_programs_button.dart';
 import '../screens/programs/programs.dart';
 import '../screens/settings/settings.dart';
 part 'root.g.dart';
