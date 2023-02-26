@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobile/screens/patients/patients.dart';
 import 'package:mobile/screens/program_builder/program_exercise_list.dart';
 import 'package:mobile/stores/index.dart';
 import 'package:provider/provider.dart';
-import '../../stores/program_builder.dart';
 import './exercise_list.dart';
 
 class ProgramBuilder extends StatefulWidget {
@@ -22,50 +20,68 @@ class _ProgramBuilderState extends State<ProgramBuilder> {
   Widget build(BuildContext context) {
     final patientId = ModalRoute.of(context)?.settings.arguments as String;
 
-    return Consumer3<ExercisesStore, ProgramBuilderStore, PatientsStore>(
-        builder: (_, exercisesStore, programBuilderStore, patientsStore, __) =>
+    return Consumer4<RootStore, ExercisesStore, ProgramBuilderStore,
+            PatientsStore>(
+        builder: (_, rootStore, exercisesStore, programBuilderStore,
+                patientsStore, __) =>
             Observer(
                 builder: (_) => Scaffold(
                     appBar: AppBar(
-                      title: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            _isEditingName
-                                ? Expanded(
-                                    child: TextField(
-                                    textAlign: TextAlign.center,
-                                    onChanged: (value) =>
-                                        programBuilderStore.programName = value,
-                                    autofocus: true,
-                                    onTapOutside: (_) {
-                                      setState(() {
-                                        _isEditingName = false;
-                                      });
-                                    },
-                                    cursorColor:
-                                        Theme.of(context).primaryColorLight,
-                                    maxLines: 1,
-                                    decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                    ),
-                                  ))
-                                : GestureDetector(
-                                    onDoubleTap: () {
-                                      setState(() {
-                                        _isEditingName = true;
-                                      });
-                                    },
-                                    child:
-                                        Text(programBuilderStore.programName)),
-                          ]),
+                      title: Column(children: [
+                        rootStore.isLoading
+                            ? const LinearProgressIndicator(
+                                minHeight: 5,
+                              )
+                            : const Material(),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _isEditingName
+                                  ? Expanded(
+                                      child: TextField(
+                                      textAlign: TextAlign.center,
+                                      onChanged: (value) => programBuilderStore
+                                          .programName = value,
+                                      autofocus: true,
+                                      onTapOutside: (_) {
+                                        setState(() {
+                                          _isEditingName = false;
+                                        });
+                                      },
+                                      cursorColor:
+                                          Theme.of(context).primaryColorLight,
+                                      maxLines: 1,
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
+                                    ))
+                                  : GestureDetector(
+                                      onDoubleTap: () {
+                                        setState(() {
+                                          _isEditingName = true;
+                                        });
+                                      },
+                                      child: Observer(
+                                          builder: (_) => Text(
+                                              programBuilderStore.programName)),
+                                    )
+                            ])
+                      ]),
                       actions: [
                         IconButton(
-                            onPressed: () {
-                              programBuilderStore.createProgram(patientId).then(
-                                  (_) => patientsStore
-                                      .fetchPatients()
-                                      .then((_) => Navigator.pop(context)));
-                            },
+                            onPressed: rootStore.isLoading
+                                ? null
+                                : () {
+                                    rootStore.isLoading = true;
+                                    programBuilderStore
+                                        .createProgram(patientId)
+                                        .then((_) => patientsStore
+                                                .fetchPatients()
+                                                .then((_) {
+                                              rootStore.isLoading = false;
+                                              Navigator.pop(context);
+                                            }));
+                                  },
                             icon: const Padding(
                                 padding: EdgeInsets.only(right: 16),
                                 child: Icon(Icons.done)))

@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:mobile/models/exercise.dart';
-import 'package:mobile/models/program.dart';
 import 'package:uuid/uuid.dart';
 import 'package:mobile/services/programs.service.dart';
 import 'package:mobx/mobx.dart';
@@ -62,7 +60,13 @@ abstract class _ProgramBuilder with Store {
   }
 
   Future<void> createProgram(String patientId) async {
-    await _programsService.createProgram(
-        programName, patientId, programExercises.toList(), description);
+    await _programsService
+        .createProgram(
+            programName, patientId, programExercises.toList(), description)
+        .then((_) {
+      programName = "New Program";
+      description = "";
+      programExercises.clear();
+    });
   }
 }
