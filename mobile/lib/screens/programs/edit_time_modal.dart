@@ -8,8 +8,11 @@ import "../../widgets/index.dart";
 class _TextField extends StatelessWidget {
   final TextEditingController controller;
   final Function(String)? onChanged;
-  const _TextField(
-      {super.key, required this.controller, required this.onChanged});
+  const _TextField({
+    super.key,
+    required this.controller,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,24 +45,20 @@ class EditTimeModal extends StatefulWidget {
 }
 
 class _EditTimeModalState extends State<EditTimeModal> {
-  late TextEditingController _hoursController;
   late TextEditingController _minutesController;
   late TextEditingController _secondsController;
 
   @override
   void initState() {
-    _hoursController = TextEditingController();
     _minutesController = TextEditingController();
     _secondsController = TextEditingController();
     super.initState();
-    _hoursController.text = widget.exercise.hours.toString();
     _minutesController.text = widget.exercise.minutes.toString();
     _secondsController.text = widget.exercise.seconds.toString();
   }
 
   @override
   void dispose() {
-    _hoursController.dispose();
     _minutesController.dispose();
     _secondsController.dispose();
     super.dispose();
@@ -77,26 +76,13 @@ class _EditTimeModalState extends State<EditTimeModal> {
                 child:
                     Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
                   _TextField(
-                      controller: _hoursController,
+                      controller: _minutesController,
                       onChanged: (value) {
                         if (value.isNotEmpty) {
                           programsStore.editExercise(widget.exercise,
-                              hours: int.parse(value));
+                              minutes: int.parse(value));
                         }
                       }),
-                  const StyledText(
-                    "h",
-                    size: 25,
-                  ),
-                  _TextField(
-                    controller: _minutesController,
-                    onChanged: (value) {
-                      if (value.isNotEmpty) {
-                        programsStore.editExercise(widget.exercise,
-                            minutes: int.parse(value));
-                      }
-                    },
-                  ),
                   const StyledText(
                     "m",
                     size: 25,
