@@ -19,6 +19,38 @@ class ProgramsService {
     return Program.fromDb(Object.values(rows[0]));
   }
 
+  async createProgram(
+    id: string,
+    name: string,
+    patientId: string,
+    description: string
+  ) {
+    await query(
+      `--sql
+    INSERT INTO programs (id, name, patient_id, description)
+    VALUES ($1, $2, $3, $4)
+    `,
+      [id, name, patientId, description]
+    );
+  }
+
+  async createProgramExercises(
+    programId: string,
+    exercises: ProgramExercise[]
+  ) {
+    await Promise.all(
+      exercises.map((exercise) =>
+        query(
+          `--sql
+    INSERT INTO program_exercises (id, exercise_id, program_id, notes)
+    VALUES ($1, $2, $3, $4)
+    `,
+          [exercise.id, exercise.exerciseId, programId, exercise.notes]
+        )
+      )
+    );
+  }
+
   async getProgramExercises(id: string) {
     const { rows } = await query(
       `--sql
@@ -46,15 +78,33 @@ class ProgramsService {
     );
   }
 
-  async updateExercise(exercise: ProgramExercise) {
-    const { exerciseId, sets, reps, weight, units, hours, minutes, seconds } =
-      exercise;
+  async updateExercise(exercise: ProgramExercise, newExercise = false) {
+    const {
+      id,
+      exerciseId,
+      sets,
+      reps,
+      weight,
+      units,
+      hours,
+      minutes,
+      seconds,
+    } = exercise;
     await query(
       `--sql
     INSERT INTO exercise_modifications (exercise_id, sets, reps, weight, units, hours, minutes, seconds)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     `,
-      [exerciseId, sets, reps, weight, units, hours, minutes, seconds]
+      [
+        newExercise ? id : exerciseId,
+        sets,
+        reps,
+        weight,
+        units,
+        hours,
+        minutes,
+        seconds,
+      ]
     );
   }
 }

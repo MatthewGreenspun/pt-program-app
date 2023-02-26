@@ -2,6 +2,7 @@ import { Router } from "express";
 import { checkAuthorization } from "../middleware/checkAuthorization";
 import { ProgramExercise } from "../models/Exercise";
 import ProgramsService from "../services/programs.service";
+import { v4 } from "uuid";
 
 const programsService = new ProgramsService();
 
@@ -23,6 +24,38 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  console.log(req.body);
+  const programId = v4();
+  const {
+    name,
+    patientId,
+    exercises,
+    description,
+  }: {
+    name: string;
+    patientId: string;
+    exercises: ProgramExercise[];
+    description: string;
+  } = req.body;
+  try {
+    await programsService.createProgram(
+      programId,
+      name,
+      patientId,
+      description
+    );
+    await programsService.createProgramExercises(programId, exercises);
+    await Promise.all(
+      exercises.map((exercise) =>
+        programsService.updateExercise(exercise, true)
+      )
+    );
+
+    res.status(200).json({});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error });
+  }
   //TODO
 });
 
