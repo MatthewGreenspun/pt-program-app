@@ -19,6 +19,19 @@ class ProgramsService extends BaseService {
     }
   }
 
+  Future<void> createProgram(String name, String patientId,
+      List<ProgramExercise> exercises, String description) async {
+    final res = await request("/programs", Method.post, data: {
+      "name": name,
+      "patientId": patientId,
+      "exercises": exercises,
+      "description": description
+    });
+    if (res['error'] != null) {
+      throw res['error'];
+    }
+  }
+
   Future<List<ProgramExercise>> getProgramExercises(String id) async {
     final res = await request("/programs/exercises/$id", Method.get);
     if (res['exercises'] != null) {
