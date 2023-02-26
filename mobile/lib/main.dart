@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/screens/program_builder/program_builder.dart';
 import 'package:mobile/services/index.dart';
 import 'package:mobile/services/programs.service.dart';
 import 'package:mobile/stores/index.dart';
@@ -48,6 +49,10 @@ class MyApp extends StatelessWidget {
           ProxyProvider<ProgramsService, ProgramsStore>(
             update: (_, programsService, __) => ProgramsStore(programsService),
           ),
+          ProxyProvider<ProgramsService, ProgramBuilderStore>(
+            update: (_, programsService, __) =>
+                ProgramBuilderStore(programsService),
+          ),
           Provider<RootStore>(create: (_) => RootStore())
         ],
         child: Consumer<SettingsStore>(
@@ -71,7 +76,9 @@ class MyApp extends StatelessWidget {
                       routes: {
                         RootContainer.routeName: (context) =>
                             const RootContainer(),
-                        Login.routeName: (context) => const Login()
+                        Login.routeName: (context) => const Login(),
+                        ProgramBuilder.routeName: (context) =>
+                            const ProgramBuilder()
                       },
                     ))));
   }

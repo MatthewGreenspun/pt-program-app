@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:mobile/screens/program_builder/program_builder.dart';
 import 'package:mobile/stores/index.dart';
 import 'package:mobile/widgets/index.dart';
 import 'package:provider/provider.dart';
@@ -63,7 +64,10 @@ class PatientCard extends StatelessWidget {
                             ))
                         .toList(),
                     OutlinedButton.icon(
-                        onPressed: () {}, //TODO open program builder
+                        onPressed: () {
+                          Navigator.pushNamed(context, ProgramBuilder.routeName,
+                              arguments: patient.id);
+                        },
                         icon: const Icon(Icons.add),
                         label: const Text("Add New"))
                   ],
