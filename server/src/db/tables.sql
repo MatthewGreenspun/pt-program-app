@@ -10,14 +10,14 @@ CREATE TABLE doctors (
 
 CREATE TABLE patients (
 	id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
-	doctor_id UUID REFERENCES doctors(id),
+	doctor_id UUID REFERENCES doctors(id) ON DELETE CASCADE,
 	name VARCHAR(500) NOT NULL,
 	email VARCHAR(500) DEFAULT ''
 );
 
 CREATE TABLE programs (
 	id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
-	patient_id UUID REFERENCES patients(id),
+	patient_id UUID REFERENCES patients(id) ON DELETE CASCADE,
 	name VARCHAR(500) NOT NULL,
 	description Text DEFAULT ''
 );
@@ -31,8 +31,8 @@ CREATE TABLE exercises (
 
 CREATE TABLE program_exercises (
 	id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
-	exercise_id UUID REFERENCES exercises(id),
-	program_id UUID REFERENCES programs(id),
+	exercise_id UUID REFERENCES exercises(id) ON DELETE CASCADE,
+	program_id UUID REFERENCES programs(id) ON DELETE CASCADE,
 	notes Text DEFAULT ''
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE program_exercises (
 CREATE TYPE unit AS ENUM ('imperial', 'metric');
 CREATE TABLE exercise_modifications (
 	id UUID NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),
-	exercise_id UUID REFERENCES program_exercises(id),
+	exercise_id UUID REFERENCES program_exercises(id) ON DELETE CASCADE,
 	time TIMESTAMP DEFAULT NOW(),
 	sets INTEGER NOT NULL,
 	reps INTEGER DEFAULT 0,
